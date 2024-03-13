@@ -888,3 +888,10 @@ article.container::before {
     gap: 16px;
   }
 }
+
+/*? Responsive for larger than 1400px screen */
+@media (min-width: 1400px) {
+  .highlight-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
