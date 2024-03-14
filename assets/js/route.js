@@ -8,7 +8,8 @@ const currentLocation = function () {
     (res) => {
       const { latitude, longitude } = res.coords;
 
-      updateWeather(`lat=${latitude}`, `lon=${longitude}`);
+      // updateWeather(`lat=${latitude}`, `lon=${longitude}`);
+      updateWeather(latitude, longitude);
     },
     (err) => {
       window.location.hash = defaultLocation;
@@ -20,8 +21,14 @@ const currentLocation = function () {
  * @param {string} query - Searched query
  */
 
-const searchedLocation = (query) => updateWeather(...query.split("&"));
-// example: updateWeather("lat=34.883850", "lon=-1.314020")
+// const searchedLocation = (query) => updateWeather(...query.split("&"));
+const searchedLocation = function (query) {
+  const params = query.split("&");
+  const lat = params.find((param) => param.startsWith("lat=")).split("=")[1];
+  const lon = params.find((param) => param.startsWith("lon=")).split("=")[1];
+  updateWeather(lat, lon);
+};
+example: updateWeather("lat=34.883850", "lon=-1.314020")
 
 const routes = new Map([
   ["/current-location", currentLocation],
@@ -40,7 +47,7 @@ const checkHash = function () {
 window.addEventListener("hashchange", checkHash);
 
 window.addEventListener("load", function () {
-  if (!this.window.location.hash) {
+  if (!window.location.hash) {
     window.location.hash = "#/current-location";
   } else {
     checkHash();
