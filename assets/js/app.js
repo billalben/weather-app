@@ -403,3 +403,6 @@ export const updateWeather = function (lat, lon) {
 };
 
 export const error404 = () => (errorContent.style.display = "flex");
+
+// Add dynamic year in footer
+document.querySelector("[data-year]").textContent = new Date().getFullYear();

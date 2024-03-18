@@ -626,6 +626,7 @@ article.container::before {
   text-align: center;
   gap: 12px 24px;
   margin-top: 28px;
+  margin-bottom: 12px;
   display: none;
 }
 .fade-in .footer {
@@ -633,6 +634,9 @@ article.container::before {
 }
 .footer .body-3:last-child {
   gap: 8px;
+}
+.footer [data-year] {
+  display: inline-block;
 }
 
 /* LOADING */
