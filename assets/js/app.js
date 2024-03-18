@@ -276,6 +276,76 @@ export const updateWeather = function (lat, lon) {
 
       highlightSection.appendChild(card);
     });
+
+    // 24H FORECAST SECTION
+    fetchData(url.forecast(lat, lon), function (forecast) {
+      const {
+        list: forecastList,
+        city: { timezone },
+      } = forecast;
+
+      hourlySection.innerHTML = `
+        <h2 class="title-2">Today at</h2>
+        <div class="slider-container">
+          <ul class="slider-list" data-temp></ul>
+          <ul class="slider-list" data-wind></ul>
+        </div>
+      `;
+
+      for (const [index, data] of forecastList.entries()) {
+        if (index > 7) break;
+
+        const {
+          dt: dateTimeUnix,
+          main: { temp },
+          wind: { deg: windDirection, speed: windSpeed },
+          weather,
+        } = data;
+        const [{ icon, description }] = weather;
+
+        const tempListItem = document.createElement("li");
+        tempListItem.classList.add("slider-item");
+
+        tempListItem.innerHTML = `
+          <div class="card card-sm slider-card">
+            <p class="body-3">${module.getHours(dateTimeUnix, timezone)}</p>
+            <img
+              src="./assets/images/weather_icons/${icon}.png"
+              width="48"
+              height="48"
+              loading="lazy"
+              alt="${description}"
+              class="weather-icon"
+              title="${description}"
+            />
+            <p class="body-3">${parseInt(temp)}&deg;</p>
+          </div>
+        `;
+
+        hourlySection.querySelector("[data-temp]").appendChild(tempListItem);
+
+        const windListItem = document.createElement("li");
+        windListItem.classList.add("slider-item");
+
+        windListItem.innerHTML = `
+          <div class="card card-sm slider-card">
+            <p class="body-3">${module.getHours(dateTimeUnix, timezone)}</p>
+            <img
+              src="./assets/images/weather_icons/direction.png"
+              width="48"
+              height="48"
+              loading="lazy"
+              alt="direction"
+              class="weather-icon"
+              style="transform: rotate(${windDirection - 180}deg)"
+            />
+            <p class="body-3">${parseInt(module.mps_to_kmp(windSpeed))} km/h</p>
+          </div>
+        `;
+
+        hourlySection.querySelector("[data-wind]").appendChild(windListItem);
+      }
+    });
   });
 };
 
