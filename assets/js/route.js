@@ -1,7 +1,7 @@
 "use strict";
 
 import { updateWeather, error404 } from "./app.js";
-const defaultLocation = "#/weather?lat=34.883850&lon=-1.314020"; // Tlemcen, Algeria
+export const defaultLocation = "#/weather?lat=34.883850&lon=-1.314020"; // Tlemcen, Algeria
 
 const currentLocation = function () {
   window.navigator.geolocation.getCurrentPosition(
@@ -23,12 +23,12 @@ const currentLocation = function () {
 
 // const searchedLocation = (query) => updateWeather(...query.split("&"));
 const searchedLocation = function (query) {
-  const params = query.split("&");
-  const lat = params.find((param) => param.startsWith("lat=")).split("=")[1];
-  const lon = params.find((param) => param.startsWith("lon=")).split("=")[1];
+  const params = query?.split("&");
+  const lat = params?.find((param) => param.startsWith("lat=")).split("=")[1];
+  const lon = params?.find((param) => param.startsWith("lon=")).split("=")[1];
   updateWeather(lat, lon);
 };
-example: updateWeather("lat=34.883850", "lon=-1.314020")
+// example: updateWeather("lat=34.883850", "lon=-1.314020")
 
 const routes = new Map([
   ["/current-location", currentLocation],

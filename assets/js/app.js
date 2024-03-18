@@ -2,6 +2,7 @@
 
 import { fetchData, url } from "./api.js";
 import * as module from "./module.js";
+import { defaultLocation } from "./route.js";
 
 /**
  * Add event listener on multiple elements
@@ -106,6 +107,11 @@ const errorContent = document.querySelector("[data-error-content]");
  */
 
 export const updateWeather = function (lat, lon) {
+  if (!lat || !lon) {
+    window.location.hash = defaultLocation;
+    return;
+  }
+
   loading.style.display = "grid";
   container.style.overflowY = "hidden";
   container.classList.remove("fade-in");
@@ -396,4 +402,4 @@ export const updateWeather = function (lat, lon) {
   });
 };
 
-export const error404 = function () {};
+export const error404 = () => (errorContent.style.display = "flex");
