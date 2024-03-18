@@ -155,7 +155,7 @@ export const updateWeather = function (lat, lon) {
       <div class="weapper">
         <p class="heading">${parseInt(temp)}&deg;<sup>c</sup></p>
         <img
-          src="/assets/images/weather_icons/${icon}.png"
+          src="./assets/images/weather_icons/${icon}.png"
           width="64"
           height="64"
           alt="${description}"
@@ -375,7 +375,7 @@ export const updateWeather = function (lat, lon) {
         li.innerHTML = `
           <div class="icon-wrapper">
             <img
-              src="/assets/images/weather_icons/${icon}.png"
+              src="./assets/images/weather_icons/${icon}.png"
               width="36"
               height="36px"
               alt="${description}"
